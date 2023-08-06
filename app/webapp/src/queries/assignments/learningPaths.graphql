@@ -1,0 +1,18 @@
+query fetchLearningPath($filter: LearningPathFilter) {
+  learningPaths(filter: $filter) {
+    meta {
+      total
+      offset
+      limit
+    }
+    edges {
+      ...learningPathItem
+    }
+  }
+}
+
+query getLearningPathForId($id: String!) {
+  learningPath(id: $id) {
+    ...learningPathItem
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "extends": "./tsconfig.shared.json",
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@tigerhall/core/*": ["packages/core/src/*"],
+      "@tigerhall/eslint-config-tigerhall/*": ["packages/eslint-config/*"],
+      "@tigerhall/theme/*": ["ui/theme/src/*"],
+      "@tigerhall/icons/*": ["ui/icons/src/*"],
+      "@tigerhall/components/*": ["ui/components/src/*"],
+      "@tigerhall/ui-components/*": ["packages/ui-components/src/*"], // hopefully will be replaced with `@tigerhall/ui` in the future
+      "@tigerhall/ui-storybook/*": ["apps/ui-storybook/src/*"],
+      "@tigerhall/webapp/*": ["apps/webapp/src/*"],
+      "@tigerhall/web/*": ["apps/web/src/*"],
+      "@tigerhall/strapi/*": ["apps/strapi/src/*"]
+    }
+  }
+}

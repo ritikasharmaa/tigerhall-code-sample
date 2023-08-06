@@ -1,0 +1,136 @@
+mutation createAssignment($orgId: ID!, $input: AssignmentInput) {
+  createAssignment(organisationID: $orgId, input: $input) {
+    id
+    assignmentTitle
+    assignmentReason
+    dueDate
+  }
+}
+
+mutation UpdateAssignment($id: ID!, $input: AssignmentInput) {
+  updateAssignment(id: $id, input: $input) {
+    id
+    assignmentTitle
+    assignmentReason
+    status
+  }
+}
+
+mutation UpdateAssignmentStatus($id: ID!, $status: AssignmentStatus!) {
+  updateAssignmentStatus(id: $id, status: $status) {
+    id
+    status
+  }
+}
+
+mutation deleteAssignment($id: ID!) {
+  deleteAssignment(id: $id)
+}
+
+query fetchAssignmentMemberStats($orgId: String!) {
+  organisation(id: $orgId) {
+    id
+    assignmentMemberStatistics {
+      id: userId
+      userId
+      username
+      groupNames
+      totalTimeConsumed
+      assignmentsCompleted
+      assignmentsInTotal
+      avgCompletionRate
+    }
+  }
+}
+
+query fetchAssignmentContentStats($orgId: String!) {
+  organisation(id: $orgId) {
+    id
+    assignmentContentStatistics {
+      id: contentId
+      contentId
+      contentName
+      durationConsumed
+      usersAssigned
+      contentLength
+      avgCompletionRate
+    }
+  }
+}
+
+query fetchAssignmentGroupStats($orgId: String!) {
+  organisation(id: $orgId) {
+    id
+    assignmentGroupStatistics {
+      id: groupID
+      groupID
+      groupName
+      peopleInTotal
+      durationConsumed
+      avgCompletionRate
+    }
+  }
+}
+
+query getOrgAssignment($orgId: String!, $assignmentId: ID!) {
+  organisation(id: $orgId) {
+    __typename
+    id
+
+    assignments(filter: { limit: 10, offset: 0, id: $assignmentId }) {
+      meta {
+        total
+        offset
+        limit
+      }
+      edges {
+        id
+        assignmentTitle
+        assignmentReason
+        dueDate
+        status
+        users {
+          meta {
+            total
+          }
+          edges {
+            id
+            firstName
+            lastName
+            email
+            organisationGroups {
+              id
+              name
+            }
+          }
+        }
+        contents {
+          meta {
+            total
+          }
+          edges {
+            ... on Podcast {
+              ...Podcast
+            }
+            ... on Ebook {
+              ...Ebook
+            }
+            ... on Stream {
+              ...Stream
+            }
+            ... on LearningPath {
+              ...LearningPath
+            }
+          }
+        }
+        orgGroups {
+          id
+          name
+          members {
+            id
+          }
+        }
+      }
+    }
+  }
+}
